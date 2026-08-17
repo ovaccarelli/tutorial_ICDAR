@@ -16,7 +16,7 @@ A hands-on workshop for building AI agents with **Pydantic AI**, tools, RAG, and
    uv run python exercises/part_01/01_entry_point.py
    ```
 
-> **Model:** The default is `qwen3.5:27b`, served by `https://vllm.kube.isc.heia-fr.ch/v1`. API documentation is available at [LiteLLM Swagger UI](https://litellm.kube-ext.isc.heia-fr.ch/).
+> **Model:** The default is `qwen3.5:27b`, served through `https://litellm.kube-ext.isc.heia-fr.ch/v1`. API documentation is available at [LiteLLM Swagger UI](https://litellm.kube-ext.isc.heia-fr.ch/).
 
 ---
 

@@ -10,7 +10,7 @@ from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
 
 DEFAULT_VLLM_MODEL = "qwen3.5:27b"
-DEFAULT_VLLM_BASE_URL = "https://vllm.kube.isc.heia-fr.ch/v1"
+DEFAULT_VLLM_BASE_URL = "https://litellm.kube-ext.isc.heia-fr.ch/v1"
 
 
 def get_vllm_model(

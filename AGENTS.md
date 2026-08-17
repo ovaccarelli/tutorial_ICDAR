@@ -2,7 +2,7 @@
 
 ## Prerequisites
 - **Python 3.13** (see `.python-version`).
-- **vLLM API** at `https://vllm.kube.isc.heia-fr.ch/v1`, authenticated through the required `VLLM_API_KEY` environment variable.
+- **LiteLLM gateway** at `https://litellm.kube-ext.isc.heia-fr.ch/v1`, authenticated through the required `VLLM_API_KEY` environment variable and serving the vLLM-hosted model.
 - Default model: `qwen3.5:27b` (from `src/tutorial_ICDAR/settings.py`). Override with `VLLM_MODEL`; `VLLM_BASE_URL` is also supported.
 
 ## Commands
