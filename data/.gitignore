@@ -1,0 +1,5 @@
+*
+!.gitignore
+!HeidiTech_Expense_Reimbursement_Policy.pdf
+!my_documents/
+!my_documents/**

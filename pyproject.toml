@@ -1,0 +1,22 @@
+[project]
+name = "tutorial_ICDAR"
+version = "0.1.0"
+description = "Experiment with agents using Pydantic AI, creating programmable AI agents that can call tools to answer queries."
+readme = "README.md"
+authors = [{ name = "Célien Donzé", email = "celien.donze@hefr.ch" }]
+requires-python = ">=3.13"
+dependencies = [
+    "chromadb>=1.5.5",
+    "ddgs>=9.13.1",
+    "loguru>=0.7.3",
+    "mcp>=1.26.0",
+    "pdfminer-six>=20260107",
+    "pydantic-ai>=1.63.0",
+    "pydantic-ai-shields>=0.3.1",
+    "pydantic-ai-slim[web-fetch]>=1.90.0",
+    "rapidocr>=3.8.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.10.6,<0.11.0"]
+build-backend = "uv_build"
