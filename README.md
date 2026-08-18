@@ -8,12 +8,12 @@ A hands-on workshop for building AI agents with **Pydantic AI**, tools, RAG, and
 
 1. **Set the vLLM API key** in your shell:
    ```bash
-   export VLLM_API_KEY="your-api-key"
+   export VLLM_API_KEY="$(<.vllm_api_key)"
    ```
 
 2. **Run any script** with `uv`:
    ```bash
-   uv run --env-file .env python exercises/part_01/01_entry_point.py
+   uv run python exercises/part_01/01_entry_point.py
    ```
 
 > **Model:** The default is `qwen3.5:27b`, served through `https://litellm.kube-ext.isc.heia-fr.ch/v1`. API documentation is available at [LiteLLM Swagger UI](https://litellm.kube-ext.isc.heia-fr.ch/).
@@ -42,9 +42,10 @@ A hands-on workshop for building AI agents with **Pydantic AI**, tools, RAG, and
 | [`03_rag_step_by_step.py`](exercises/part_01/03_rag_step_by_step.py) | Four-step RAG pipeline — chunks, indexes, retrieves, and answers (CLI) |
 
 ```bash
-uv run --env-file .env python exercises/part_01/01_entry_point.py
+export VLLM_API_KEY="$(<.vllm_api_key)"
+uv run python exercises/part_01/01_entry_point.py
 uv run python exercises/part_01/02_document_tools.py
-uv run --env-file .env python exercises/part_01/03_rag_step_by_step.py
+uv run python exercises/part_01/03_rag_step_by_step.py
 ```
 
 ---
@@ -57,8 +58,8 @@ uv run --env-file .env python exercises/part_01/03_rag_step_by_step.py
 | [`02_document_tools_agent.py`](exercises/part_02/02_document_tools_agent.py) | Agent combining the shared RAG collection with document tools — web app on port 8000 |
 
 ```bash
-uv run --env-file .env python exercises/part_02/01_rag_agent.py            # port 8000
-uv run --env-file .env python exercises/part_02/02_document_tools_agent.py # port 8000
+uv run python exercises/part_02/01_rag_agent.py            # port 8000
+uv run python exercises/part_02/02_document_tools_agent.py # port 8000
 ```
 
 > **Note:** Run Part 01's completed `03_rag_step_by_step.py` once before any later RAG agent or MCP server. Every Part 02 and Part 03 component reuses its persistent ChromaDB collection and does not index the policy again.
@@ -79,10 +80,10 @@ This part introduces a two-component architecture: a standalone MCP server expos
 
 ```bash
 # Terminal 1 — start the MCP server first
-uv run --env-file .env python exercises/part_03/01_mcp_rag_server.py # port 8001
+uv run python exercises/part_03/01_mcp_rag_server.py # port 8001
 
 # Terminal 2 — then start the agent
-uv run --env-file .env python exercises/part_03/02_simple_mcp_rag_agent.py # port 8000
+uv run python exercises/part_03/02_simple_mcp_rag_agent.py # port 8000
 ```
 
 > **Important:** The MCP server must be running before any MCP-dependent agent. Agents discover the `search_relevant_context_from_HAL_9000_policy` tool automatically via the MCP protocol at `localhost:8001/mcp`.

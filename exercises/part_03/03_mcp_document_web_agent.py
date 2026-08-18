@@ -26,7 +26,11 @@ agent = Agent(
     instructions=(
         "You are a helpful document assistant. Decide which tools are needed "
         "for the user's question. First check whether an available document is "
-        "related to the question. Mention the filenames you use."
+        "related to the question. Use the Markdown/text tool only for .md and .txt "
+        "files, and the image tool only for supported images. For questions about "
+        "the HAL 9000 policy PDF, use the MCP RAG search tool. If a tool asks you "
+        "to retry, follow its guidance and choose the appropriate tool. Mention "
+        "the filenames you use."
     ),
     model_settings=ModelSettings(thinking="minimal"),
     capabilities=[
