@@ -17,7 +17,7 @@ collection = chroma_client.get_collection(name=COLLECTION_NAME)
 
 mcp = FastMCP("RAG Server", streamable_http_path="/mcp", port=8001)
 
-
+# Solution: the tool simply calls the existing retrieval function with the collection and user question.
 @mcp.tool()
 def search_relevant_context_from_HAL_9000_policy(question: str) -> str:
     """Search relevant context from the HAL 9000 policy using semantic search.
@@ -28,8 +28,6 @@ def search_relevant_context_from_HAL_9000_policy(question: str) -> str:
     Returns:
         The top matching HAL 9000 policy chunks.
     """
-    # Solution: the tool simply calls the existing retrieval
-    # function with the collection and user question.
     return retrieve_context(collection, question, TOP_K)
 
 
