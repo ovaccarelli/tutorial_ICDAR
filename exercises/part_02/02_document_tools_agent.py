@@ -2,6 +2,7 @@
 
 from pathlib import Path
 
+import chromadb
 import uvicorn
 from loguru import logger
 from pydantic_ai import Agent, ModelSettings
@@ -12,29 +13,17 @@ from tutorial_ICDAR.utils.document_tools import (
     list_my_available_documents,
 )
 from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
-from tutorial_ICDAR.utils.rag_utils import (
-    build_vector_collection,
-    retrieve_context,
-)
+from tutorial_ICDAR.utils.rag_utils import retrieve_context
 
 HERE = Path(__file__).parent
 DATA_DIR = HERE.parent.parent / "data"
 CHROMA_DIR = DATA_DIR / "chroma_db"
-COLLECTION_NAME = "pdf_chunks_part_02_document_context_agent"
-HAL_9000_POLICY_PDF = DATA_DIR / "HAL_9000_Expense_Reimbursement_Policy.pdf"
-
-CHUNK_SIZE = 1000
-CHUNK_OVERLAP = 200
+COLLECTION_NAME = "HAL_9000_Expense_Reimbursement_Policy_chunks"
 TOP_K = 5
 
-
-collection = build_vector_collection(
-    pdf_path=HAL_9000_POLICY_PDF,
-    chroma_dir=CHROMA_DIR,
-    collection_name=COLLECTION_NAME,
-    chunk_size=CHUNK_SIZE,
-    chunk_overlap=CHUNK_OVERLAP,
-)
+# Reuse the persistent collection created in Part 01.
+chroma_client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+collection = chroma_client.get_collection(name=COLLECTION_NAME)
 
 
 agent = Agent(
@@ -53,7 +42,6 @@ agent = Agent(
     model_settings=ModelSettings(thinking="minimal"),
 )
 
-
 @agent.tool_plain
 def search_relevant_context_from_HAL_9000_policy(query: str) -> str:
     """Search relevant context from the HAL 9000 policy using semantic search.
@@ -62,7 +50,7 @@ def search_relevant_context_from_HAL_9000_policy(query: str) -> str:
         query: The search query.
 
     Returns:
-        The top matching HAL 9000 policy chunks with source filename and positions.
+        The top matching HAL 9000 policy chunks.
     """
     return retrieve_context(collection, query, TOP_K)
 

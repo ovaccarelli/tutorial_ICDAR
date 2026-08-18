@@ -8,7 +8,7 @@ from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
 MCP_SERVER_URL = "http://localhost:8001/mcp"
 
 # EXERCISE 1 - Check the FastMCPToolset documentation and initialize
-# the toolset to connect to the MCP server you created in part_03/02a.
+# the toolset to connect to part_03/01_mcp_rag_server.py.
 # Link to documentation: https://pydantic.dev/docs/ai/mcp/fastmcp-client/
 toolset = ...
 
@@ -16,9 +16,7 @@ agent = Agent(
     model=get_vllm_model(),
     instructions=(
         "You are a helpful assistant. Be concise and accurate. "
-        "Always use the available tools and cite your sources when providing "
-        "document information. When citing chunks, include the source PDF name "
-        "and position in the format: [Source: filename.pdf, Position: X]. "
+        "Always use the available tools when providing document information. "
         "If the information is not found in the documents, say you don't know. "
         "Do not answer questions unrelated to the document content."
     ),

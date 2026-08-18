@@ -14,9 +14,7 @@ agent = Agent(
     model=get_vllm_model(),
     instructions=(
         "You are a helpful assistant. Be concise and accurate. "
-        "Always use the available tools and cite your sources when providing "
-        "document information. When citing chunks, include the source PDF name "
-        "and position in the format: [Source: filename.pdf, Position: X]. "
+        "Always use the available tools when providing document information. "
         "If the information is not found in the documents, say you don't know. "
         "Do not answer questions unrelated to the document content."
     ),

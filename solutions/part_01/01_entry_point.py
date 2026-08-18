@@ -37,7 +37,7 @@ agent = Agent(
 if __name__ == "__main__":
     start_time = time.perf_counter()
 
-    result = agent.run_sync("What is the capital of France?")
+    result = agent.run_sync("What is the capital of Italy?")
 
     end_time = time.perf_counter()
     output_tokens = result.usage().output_tokens
