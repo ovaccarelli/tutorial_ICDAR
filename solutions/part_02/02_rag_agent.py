@@ -14,7 +14,7 @@ from tutorial_ICDAR.utils.rag_utils import (
 
 HERE = Path(__file__).parent
 DATA_DIR = HERE.parent.parent / "data"
-HEIDITECH_POLICY_PDF = DATA_DIR / "HeidiTech_Expense_Reimbursement_Policy.pdf"
+HAL_9000_POLICY_PDF = DATA_DIR / "HAL_9000_Expense_Reimbursement_Policy.pdf"
 
 CHROMA_DIR = DATA_DIR / "chroma_db"
 COLLECTION_NAME = "pdf_chunks_part_02_simple_rag_agent"
@@ -25,7 +25,7 @@ TOP_K = 5
 
 
 collection = build_vector_collection(
-    pdf_path=HEIDITECH_POLICY_PDF,
+    pdf_path=HAL_9000_POLICY_PDF,
     chroma_dir=CHROMA_DIR,
     collection_name=COLLECTION_NAME,
     chunk_size=CHUNK_SIZE,
@@ -48,14 +48,14 @@ agent = Agent(
 # Solution: expose retrieval as a tool so the agent can call it when needed
 # to get relevant context for answering user questions.
 @agent.tool_plain
-def search_relevant_context_from_HeidiTech_policy(question: str) -> str:
-    """Search relevant context from the HeidiTech policy using semantic search.
+def search_relevant_context_from_HAL_9000_policy(question: str) -> str:
+    """Search relevant context from the HAL 9000 policy using semantic search.
 
     Args:
         question: The user's question.
 
     Returns:
-        The top matching HeidiTech policy chunks with source filename and positions.
+        The top matching HAL 9000 policy chunks with source filename and positions.
     """
     # Solution: the tool simply calls the existing retrieval
     # function with the collection and user question.

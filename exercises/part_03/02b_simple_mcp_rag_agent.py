@@ -27,8 +27,8 @@ agent = Agent(
 
 
 if __name__ == "__main__":
-    # EXERCISE 2 - Start this agent and ask it questions about the HeidiTech policy.
-    # Example question: According to the HeidiTech policy, what is the maximum amount
+    # EXERCISE 2 - Start this agent and ask it questions about the HAL 9000 policy.
+    # Example question: According to the HAL 9000 policy, what is the maximum amount
     # that can be reimbursed for a meal without itemized receipts? And what is the source
     # of this information?
     app = agent.to_web()

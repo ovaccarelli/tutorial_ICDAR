@@ -24,7 +24,7 @@ All scripts run via `uv run python exercises/<path>` or `uv run python solutions
 | `part_03_BONUS/guardrails_with_hooks.py` | Web app | 8000 |
 
 ### MCP execution order
-`02a_mcp_rag_server.py` MUST start before `02b_simple_mcp_rag_agent.py` or `03_mcp_document_web_agent.py`. The agents discover the `search_relevant_context_from_HeidiTech_policy` tool via MCP over HTTP at `localhost:8001/mcp`.
+`02a_mcp_rag_server.py` MUST start before `02b_simple_mcp_rag_agent.py` or `03_mcp_document_web_agent.py`. The agents discover the `search_relevant_context_from_HAL_9000_policy` tool via MCP over HTTP at `localhost:8001/mcp`.
 
 ### Port conflicts
 Most web apps default to **8000**, while the MCP server uses **8001**. You cannot run two web apps on port 8000 simultaneously. The supported multi-service combo is MCP server (8001) + one agent (8000).
@@ -40,7 +40,7 @@ This is a workshop. No CI, no formatters, no pre-commit, no test suite.
   - `utils/rag_utils.py` — `extract_pdf_to_markdown()`, `build_chunks()`, `create_vector_collection()`, `build_vector_collection()`, `retrieve_context()`
   - `utils/document_tools.py` — `list_my_available_documents()`, `extract_text_from_md_or_txt_file()`, `extract_text_from_image_file()`
   - `settings.py` — `DEFAULT_VLLM_MODEL`, `DEFAULT_VLLM_BASE_URL`
-- **`data/`** — PDFs. `data/.gitignore` only keeps `HeidiTech_Expense_Reimbursement_Policy.pdf` and `my_documents/`.
+- **`data/`** — PDFs. `data/.gitignore` only keeps `HAL_9000_Expense_Reimbursement_Policy.pdf` and `my_documents/`.
 - **Vector Store**: ChromaDB at `data/chroma_db/`. `build_vector_collection()` defaults to `reindex=True`. To force re-index, delete `data/chroma_db/` and restart.
 
 ## Gotchas

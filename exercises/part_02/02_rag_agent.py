@@ -14,7 +14,7 @@ from tutorial_ICDAR.utils.rag_utils import (
 
 HERE = Path(__file__).parent
 DATA_DIR = HERE.parent.parent / "data"
-HEIDITECH_POLICY_PDF = DATA_DIR / "HeidiTech_Expense_Reimbursement_Policy.pdf"
+HAL_9000_POLICY_PDF = DATA_DIR / "HAL_9000_Expense_Reimbursement_Policy.pdf"
 
 CHROMA_DIR = DATA_DIR / "chroma_db"
 COLLECTION_NAME = "pdf_chunks_part_02_simple_rag_agent"
@@ -25,7 +25,7 @@ TOP_K = 5
 
 
 collection = build_vector_collection(
-    pdf_path=HEIDITECH_POLICY_PDF,
+    pdf_path=HAL_9000_POLICY_PDF,
     chroma_dir=CHROMA_DIR,
     collection_name=COLLECTION_NAME,
     chunk_size=CHUNK_SIZE,
@@ -48,7 +48,7 @@ agent = Agent(
 # Define a tool that takes a user question as input and retrieves relevant
 # PDF context from the local vector database. The tool should return the
 # top matching PDF chunks with source filenames and positions.
-# Name the tool search_relevant_context_from_HeidiTech_policy so the agent
+# Name the tool search_relevant_context_from_HAL_9000_policy so the agent
 # clearly understands when to use it.
 # The function should call retrieve_context
 # with the appropriate arguments to get the relevant context based on the user question.

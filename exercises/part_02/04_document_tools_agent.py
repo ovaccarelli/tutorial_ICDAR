@@ -21,7 +21,7 @@ HERE = Path(__file__).parent
 DATA_DIR = HERE.parent.parent / "data"
 CHROMA_DIR = DATA_DIR / "chroma_db"
 COLLECTION_NAME = "pdf_chunks_part_02_document_context_agent"
-HEIDITECH_POLICY_PDF = DATA_DIR / "HeidiTech_Expense_Reimbursement_Policy.pdf"
+HAL_9000_POLICY_PDF = DATA_DIR / "HAL_9000_Expense_Reimbursement_Policy.pdf"
 
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
@@ -29,7 +29,7 @@ TOP_K = 5
 
 
 collection = build_vector_collection(
-    pdf_path=HEIDITECH_POLICY_PDF,
+    pdf_path=HAL_9000_POLICY_PDF,
     chroma_dir=CHROMA_DIR,
     collection_name=COLLECTION_NAME,
     chunk_size=CHUNK_SIZE,
@@ -55,22 +55,22 @@ agent = Agent(
 
 
 @agent.tool_plain
-def search_relevant_context_from_HeidiTech_policy(query: str) -> str:
-    """Search relevant context from the HeidiTech policy using semantic search.
+def search_relevant_context_from_HAL_9000_policy(query: str) -> str:
+    """Search relevant context from the HAL 9000 policy using semantic search.
 
     Args:
         query: The search query.
 
     Returns:
-        The top matching HeidiTech policy chunks with source filename and positions.
+        The top matching HAL 9000 policy chunks with source filename and positions.
     """
     return retrieve_context(collection, query, TOP_K)
 
 
 if __name__ == "__main__":
     # EXERCISE 2 - Test the agent with document tools and RAG retrieval:
-    # Start the agent and ask it questions about the workshop documents and the HeidiTech policy.
-    # Example questions: With respect to the HeidiTech policy, is my restaurant too expensive?
+    # Start the agent and ask it questions about the workshop documents and the HAL 9000 policy.
+    # Example questions: With respect to the HAL 9000 policy, is my restaurant too expensive?
     app = agent.to_web()
     logger.info("Starting Document Context Agent on http://127.0.0.1:8000")
     uvicorn.run(app, host="127.0.0.1", port=8000)

@@ -73,7 +73,7 @@ This part introduces a two-component architecture: a standalone MCP server expos
 | Script | What it does |
 |---|---|
 | [`01_simple_websearch_agent.py`](exercises/part_03/01_simple_websearch_agent.py) | Agent with a web search capability — web app on port 8000 |
-| [`02a_mcp_rag_server.py`](exercises/part_03/02a_mcp_rag_server.py) | MCP server — indexes the PDF and exposes `search_relevant_context_from_HeidiTech_policy` via Streamable HTTP on port 8001 |
+| [`02a_mcp_rag_server.py`](exercises/part_03/02a_mcp_rag_server.py) | MCP server — indexes the PDF and exposes `search_relevant_context_from_HAL_9000_policy` via Streamable HTTP on port 8001 |
 | [`02b_simple_mcp_rag_agent.py`](exercises/part_03/02b_simple_mcp_rag_agent.py) | Agent that consumes the MCP server's RAG tool — web app on port 8000 |
 | [`03_mcp_document_web_agent.py`](exercises/part_03/03_mcp_document_web_agent.py) | Agent combining MCP RAG, document tools, and web search — web app on port 8000 |
 
@@ -87,7 +87,7 @@ uv run python exercises/part_03/02a_mcp_rag_server.py      # port 8001
 uv run python exercises/part_03/02b_simple_mcp_rag_agent.py # port 8000
 ```
 
-> **Important:** The MCP server must be running before any MCP-dependent agent. Agents discover the `search_relevant_context_from_HeidiTech_policy` tool automatically via the MCP protocol at `localhost:8001/mcp`.
+> **Important:** The MCP server must be running before any MCP-dependent agent. Agents discover the `search_relevant_context_from_HAL_9000_policy` tool automatically via the MCP protocol at `localhost:8001/mcp`.
 
 ---
 

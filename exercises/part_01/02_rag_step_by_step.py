@@ -18,7 +18,7 @@ from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
 
 HERE = Path(__file__).resolve().parent
 DATA_DIR = HERE.parent.parent / "data"
-HEIDITECH_POLICY_PDF = DATA_DIR / "HeidiTech_Expense_Reimbursement_Policy.pdf"
+HAL_9000_POLICY_PDF = DATA_DIR / "HAL_9000_Expense_Reimbursement_Policy.pdf"
 CHROMA_DIR = DATA_DIR / "chroma_db"
 COLLECTION_NAME = "part_01_step_by_step_pdf_chunks"
 
@@ -185,8 +185,8 @@ def answer_with_context(question: str, context: str) -> str:
 if __name__ == "__main__":
     user_question = "What is reimbursed for transportation expenses?"
 
-    extracted_text = extract_pdf_to_markdown(HEIDITECH_POLICY_PDF)
-    # pdf_chunks = build_chunks(extracted_text, HEIDITECH_POLICY_PDF.name)
+    extracted_text = extract_pdf_to_markdown(HAL_9000_POLICY_PDF)
+    # pdf_chunks = build_chunks(extracted_text, HAL_9000_POLICY_PDF.name)
     # vector_collection = create_vector_collection(pdf_chunks)
     # retrieved_context = retrieve_context(vector_collection, user_question)
     # answer = answer_with_context(user_question, retrieved_context)
