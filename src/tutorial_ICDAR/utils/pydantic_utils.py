@@ -16,12 +16,14 @@ def get_vllm_model(
     base_url: str | None = None,
     api_key: str | None = None,
 ) -> OpenAIChatModel:
-    """Create a Pydantic AI model backed by the remote vLLM OpenAI API.
+    """Create a Pydantic AI model backed by an OpenAI-compatible vLLM API.
 
     Args:
         model_name: Optional name of the vLLM model to use. If not provided, it will be read from the VLLM_MODEL environment variable or default to DEFAULT_VLLM_MODEL.
         base_url: Optional base URL for the vLLM API. If not provided, it will be read from the VLLM_BASE_URL environment variable or default to DEFAULT_VLLM_BASE_URL.
-        api_key: Optional API key. If not provided, it is read from the required VLLM_API_KEY environment variable.
+        api_key: Optional API key. If not provided, ``VLLM_API_KEY`` is used
+            when set; otherwise a harmless placeholder is sent for local vLLM
+            servers that do not require authentication.
 
     Returns:
         An instance of OpenAIChatModel configured to use the specified vLLM model and API base URL.
@@ -30,6 +32,6 @@ def get_vllm_model(
         model_name=model_name or os.getenv("VLLM_MODEL", DEFAULT_VLLM_MODEL),
         provider=OpenAIProvider(
             base_url=base_url or os.getenv("VLLM_BASE_URL", DEFAULT_VLLM_BASE_URL),
-            api_key=api_key or os.environ["VLLM_API_KEY"],
+            api_key=api_key or os.getenv("VLLM_API_KEY") or "not-needed",
         ),
     )

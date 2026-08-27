@@ -23,7 +23,7 @@ def get_vllm_model(
         model_name=model_name or os.getenv("VLLM_MODEL", DEFAULT_VLLM_MODEL),
         provider=OpenAIProvider(
             base_url=base_url or os.getenv("VLLM_BASE_URL", DEFAULT_VLLM_BASE_URL),
-            api_key=api_key or os.environ["VLLM_API_KEY"],
+            api_key=api_key or os.getenv("VLLM_API_KEY") or "not-needed",
         ),
     )
 
