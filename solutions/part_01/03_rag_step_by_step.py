@@ -76,7 +76,7 @@ question = "What transportation expenses are reimbursable?"
 
 # SOLUTION - Retrieval settings:
 # Retrieve the five chunks most similar to the question.
-TOP_K = 5
+TOP_K = 8
 
 # SOLUTION - Semantic retrieval:
 # Wrap the question in a list because ChromaDB supports multiple queries.

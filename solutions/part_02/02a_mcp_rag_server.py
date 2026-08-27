@@ -8,7 +8,7 @@ from tutorial_ICDAR.utils.rag_utils import retrieve_context
 HERE = Path(__file__).parent
 DATA_DIR = HERE.parent.parent / "data"
 CHROMA_DIR = DATA_DIR / "chroma_db"
-TOP_K = 5
+TOP_K = 8
 COLLECTION_NAME = "HAL_9000_Expense_Reimbursement_Policy_chunks"
 
 # Reuse the persistent collection created in Part 01.
