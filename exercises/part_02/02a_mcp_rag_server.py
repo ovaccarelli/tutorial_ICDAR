@@ -34,6 +34,6 @@ def search_relevant_context_from_HAL_9000_policy(question: str) -> str:
 
 if __name__ == "__main__":
     # EXERCISE 2 - RAG Server:
-    # Start this RAG server and go to part_03/02_simple_mcp_rag_agent.py
+    # Start this RAG server and go to part_02/02b_mcp_rag_agent.py
     # to connect the agent to this mcp server for RAG retrieval.
     mcp.run(transport="streamable-http")

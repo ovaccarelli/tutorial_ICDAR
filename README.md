@@ -50,56 +50,45 @@ uv run python exercises/part_01/03_rag_step_by_step.py
 
 ---
 
-### Part 02 — Built-in Tools, Agentic RAG & Document Handling
+### Part 02 — Agentic RAG, MCP, Document Tools & Guardrails
 
 | Script | What it does |
 |---|---|
 | [`01_rag_agent.py`](exercises/part_02/01_rag_agent.py) | Agentic RAG — ChromaDB retrieval exposed as an agent tool — web app on port 8000 |
-| [`02_document_tools_agent.py`](exercises/part_02/02_document_tools_agent.py) | Agent combining the shared RAG collection with document tools — web app on port 8000 |
+| [`02a_mcp_rag_server.py`](exercises/part_02/02a_mcp_rag_server.py) | MCP server exposing the shared RAG collection over Streamable HTTP on port 8001 |
+| [`02b_mcp_rag_agent.py`](exercises/part_02/02b_mcp_rag_agent.py) | Agent consuming the MCP server's RAG tool — web app on port 8000 |
+| [`03_mcp_document_web_agent.py`](exercises/part_02/03_mcp_document_web_agent.py) | Agent combining MCP RAG, document tools, web search, and time — web app on port 8000 |
 
 ```bash
-uv run python exercises/part_02/01_rag_agent.py            # port 8000
-uv run python exercises/part_02/02_document_tools_agent.py # port 8000
+uv run python exercises/part_02/01_rag_agent.py # port 8000
 ```
 
-> **Note:** Run Part 01's completed `03_rag_step_by_step.py` once before any later RAG agent or MCP server. Every Part 02 and Part 03 component reuses its persistent ChromaDB collection and does not index the policy again.
-
----
-
-### Part 03 — MCP: Decoupled RAG via the Model Context Protocol
-
-This part introduces a two-component architecture: a standalone MCP server exposes the retrieval tool over HTTP, and the agent discovers and calls it at runtime.
-
-| Script | What it does |
-|---|---|
-| [`01_mcp_rag_server.py`](exercises/part_03/01_mcp_rag_server.py) | MCP server exposing the shared RAG collection over Streamable HTTP on port 8001 |
-| [`02_simple_mcp_rag_agent.py`](exercises/part_03/02_simple_mcp_rag_agent.py) | Agent that consumes the MCP server's RAG tool — web app on port 8000 |
-| [`03_mcp_document_web_agent.py`](exercises/part_03/03_mcp_document_web_agent.py) | Agent combining MCP RAG, document tools, and web search — web app on port 8000 |
+> **Note:** Run Part 01's completed `03_rag_step_by_step.py` once before the Part 02 RAG agent or MCP server. Part 02 reuses its persistent ChromaDB collection and does not index the policy again.
 
 **Run in this order** (two terminals):
 
 ```bash
 # Terminal 1 — start the MCP server first
-uv run python exercises/part_03/01_mcp_rag_server.py # port 8001
+uv run python exercises/part_02/02a_mcp_rag_server.py # port 8001
 
 # Terminal 2 — then start the agent
-uv run python exercises/part_03/02_simple_mcp_rag_agent.py # port 8000
+uv run python exercises/part_02/02b_mcp_rag_agent.py # port 8000
 ```
 
 > **Important:** The MCP server must be running before any MCP-dependent agent. Agents discover the `search_relevant_context_from_HAL_9000_policy` tool automatically via the MCP protocol at `localhost:8001/mcp`.
 
 ---
 
-### Part 03 BONUS — Guardrails & Safety
+### Part 02 BONUS — Guardrails & Safety
 
 | Script | What it does |
 |---|---|
-| [`simple_guardrail.py`](exercises/part_03_BONUS/simple_guardrail.py) | Agent with `pydantic_ai_shields` `PromptInjection()` — blocks prompt injection attacks (CLI) |
-| [`guardrails_with_hooks.py`](exercises/part_03_BONUS/guardrails_with_hooks.py) | Agent with a custom `before_model_request` hook — inspects and blocks/redacts forbidden content (web app on port 8000) |
+| [`simple_guardrail.py`](exercises/part_02_BONUS/simple_guardrail.py) | Agent with `pydantic_ai_shields` `PromptInjection()` — blocks prompt injection attacks (CLI) |
+| [`guardrails_with_hooks.py`](exercises/part_02_BONUS/guardrails_with_hooks.py) | Agent with a custom `before_model_request` hook — inspects and blocks/redacts forbidden content (web app on port 8000) |
 
 ```bash
-uv run python exercises/part_03_BONUS/simple_guardrail.py
-uv run python exercises/part_03_BONUS/guardrails_with_hooks.py
+uv run python exercises/part_02_BONUS/simple_guardrail.py
+uv run python exercises/part_02_BONUS/guardrails_with_hooks.py
 ```
 
 ---

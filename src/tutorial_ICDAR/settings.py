@@ -1,2 +1,2 @@
-DEFAULT_VLLM_MODEL = "qwen3.5:27b"
-DEFAULT_VLLM_BASE_URL = "https://litellm.kube-ext.isc.heia-fr.ch/v1"
+DEFAULT_VLLM_MODEL = "Qwen/Qwen3.8-27B-FP8"
+DEFAULT_VLLM_BASE_URL = "http://160.98.250.21:8000/v1"

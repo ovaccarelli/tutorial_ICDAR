@@ -8,7 +8,7 @@ from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
 MCP_SERVER_URL = "http://localhost:8001/mcp"
 
 # EXERCISE 1 - Check the FastMCPToolset documentation and initialize
-# the toolset to connect to part_03/01_mcp_rag_server.py.
+# the toolset to connect to part_02/02a_mcp_rag_server.py.
 # Link to documentation: https://pydantic.dev/docs/ai/mcp/fastmcp-client/
 toolset = ...
 
