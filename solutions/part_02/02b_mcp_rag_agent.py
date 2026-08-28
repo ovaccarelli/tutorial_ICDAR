@@ -1,14 +1,14 @@
 import uvicorn
 from loguru import logger
 from pydantic_ai import Agent
-from pydantic_ai.toolsets.fastmcp import FastMCPToolset
+from pydantic_ai.mcp import MCPToolset
 
 from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
 
 MCP_SERVER_URL = "http://localhost:8001/mcp"
 
-# Solution: FastMCPToolset connects this agent to the MCP server tool endpoint.
-toolset = FastMCPToolset(MCP_SERVER_URL)
+# Solution: MCPToolset connects this agent to the MCP server tool endpoint.
+toolset = MCPToolset(MCP_SERVER_URL)
 
 agent = Agent(
     model=get_vllm_model(),

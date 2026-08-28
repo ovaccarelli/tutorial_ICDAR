@@ -3,6 +3,7 @@
 from pathlib import Path
 
 from loguru import logger
+from pdfminer.high_level import extract_text
 from pydantic_ai import ModelRetry
 from rapidocr import RapidOCR
 
@@ -49,7 +50,7 @@ def extract_text_from_md_or_txt_file(file_path: str) -> str:
             raise ModelRetry(
                 f"'{path.name}' is a PDF, so it cannot be read with the Markdown/text tool. "
                 "If the user is asking about the HAL 9000 policy, use the RAG search tool "
-                "instead. Otherwise explain that this tool supports only .md and .txt files."
+                "instead. Otherwise, use the PDF extraction tool."
             )
         raise ModelRetry(
             f"'{path.name}' is not a Markdown or text file. "
@@ -81,8 +82,7 @@ def extract_text_from_image_file(file_path: str) -> str:
         if path.suffix.lower() == ".pdf":
             raise ModelRetry(
                 f"'{path.name}' is a PDF, not an image supported by this OCR tool. "
-                "If the user is asking about the HAL 9000 policy, use the RAG search tool "
-                "instead. Otherwise explain that PDF extraction is not available."
+                "Use the PDF extraction tool instead."
             )
         raise ModelRetry(
             f"'{path.name}' is not a supported image. "
@@ -93,3 +93,30 @@ def extract_text_from_image_file(file_path: str) -> str:
     ocr = RapidOCR()
     result = ocr(path)
     return "\n".join(result.txts) if result else "Image text could not be extracted."
+
+
+def extract_text_from_pdf_file(file_path: str) -> str:
+    """Extract text only from PDF files using pdfminer.
+
+    Args:
+        file_path: The filename or path of the PDF document to extract text from.
+
+    Returns:
+        The extracted text content of the PDF document.
+    """
+    path = DOCUMENT_DIR / file_path
+
+    if not path.is_file():
+        raise ModelRetry(
+            f"Document '{file_path}' was not found. "
+            "Call list_my_available_documents and choose an existing filename."
+        )
+
+    if path.suffix.lower() != ".pdf":
+        raise ModelRetry(
+            f"'{path.name}' is not a PDF file. Use the Markdown/text extraction "
+            "tool for .md or .txt files, or the image extraction tool for images."
+        )
+
+    logger.info(f"Extracting PDF text with pdfminer from {path.name}")
+    return extract_text(str(path))

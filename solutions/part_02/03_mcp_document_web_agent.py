@@ -8,6 +8,7 @@ from pydantic_ai.capabilities import MCP, WebSearch
 from tutorial_ICDAR.utils.document_tools import (
     extract_text_from_image_file,
     extract_text_from_md_or_txt_file,
+    extract_text_from_pdf_file,
     list_my_available_documents,
 )
 from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
@@ -20,20 +21,22 @@ agent = Agent(
         list_my_available_documents,
         extract_text_from_md_or_txt_file,
         extract_text_from_image_file,
+        extract_text_from_pdf_file,
     ],
     instructions=(
         "You are a helpful document assistant. Decide which tools are needed "
         "for the user's question. First check whether an available document is "
         "related to the question. Use the Markdown/text tool only for .md and .txt "
-        "files, and the image tool only for supported images. For questions about "
-        "the HAL 9000 policy PDF, use the MCP RAG search tool. If a tool asks you "
+        "files, the image tool only for supported images, and the PDF tool only "
+        "for .pdf files. For questions about the HAL 9000 policy PDF, prefer the "
+        "MCP RAG search tool. If a tool asks you "
         "to retry, follow its guidance and choose the appropriate tool. Mention "
         "the filenames you use."
     ),
     model_settings=ModelSettings(thinking="minimal"),
     capabilities=[
-        MCP(url=MCP_SERVER_URL),
-        WebSearch(builtin=False),
+        MCP(url=MCP_SERVER_URL, native=False),
+        WebSearch(native=False, local="duckduckgo"),
     ],
 )
 
