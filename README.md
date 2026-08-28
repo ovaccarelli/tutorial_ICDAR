@@ -74,7 +74,7 @@ uv run python exercises/part_01/03_rag_step_by_step.py
 uv run python exercises/part_02/01_rag_agent.py # port 8000
 ```
 
-> **Note:** Run Part 01's completed `03_rag_step_by_step.py` once before the Part 02 RAG agent or MCP server. Part 02 reuses its persistent ChromaDB collection and does not index the policy again.
+> **Note:** Run Part 01's completed `03_rag_step_by_step.py` once before the Part 02 RAG agent or MCP server. Part 02 prefers the collection you create in `data/chroma_db`. If you cannot create it, the agents automatically use the ready-made collection committed in `data/chroma_db_prebuilt` instead.
 
 **Run in this order** (two terminals):
 

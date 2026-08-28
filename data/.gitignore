@@ -2,3 +2,5 @@
 !.gitignore
 !my_documents/
 !my_documents/**
+!chroma_db_prebuilt/
+!chroma_db_prebuilt/**

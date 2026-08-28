@@ -2,23 +2,19 @@
 
 from pathlib import Path
 
-import chromadb
 import uvicorn
 from loguru import logger
 from pydantic_ai import Agent, ModelSettings
 
 from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
-from tutorial_ICDAR.utils.rag_utils import retrieve_context
+from tutorial_ICDAR.utils.rag_utils import get_policy_collection, retrieve_context
 
 HERE = Path(__file__).parent
 DATA_DIR = HERE.parent.parent / "data"
-CHROMA_DIR = DATA_DIR / "chroma_db"
-COLLECTION_NAME = "HAL_9000_Expense_Reimbursement_Policy_chunks"
 TOP_K = 8
 
-# Reuse the persistent collection created in Part 01.
-chroma_client = chromadb.PersistentClient(path=str(CHROMA_DIR))
-collection = chroma_client.get_collection(name=COLLECTION_NAME)
+# Prefer the collection created in Part 01; use the bundled fallback if needed.
+collection = get_policy_collection(DATA_DIR)
 
 agent = Agent(
     model=get_vllm_model(),

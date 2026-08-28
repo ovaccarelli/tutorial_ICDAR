@@ -1,19 +1,15 @@
 from pathlib import Path
 
-import chromadb
 from mcp.server.fastmcp import FastMCP
 
-from tutorial_ICDAR.utils.rag_utils import retrieve_context
+from tutorial_ICDAR.utils.rag_utils import get_policy_collection, retrieve_context
 
 HERE = Path(__file__).parent
 DATA_DIR = HERE.parent.parent / "data"
-CHROMA_DIR = DATA_DIR / "chroma_db"
 TOP_K = 8
-COLLECTION_NAME = "HAL_9000_Expense_Reimbursement_Policy_chunks"
 
-# Reuse the persistent collection created in Part 01.
-chroma_client = chromadb.PersistentClient(path=str(CHROMA_DIR))
-collection = chroma_client.get_collection(name=COLLECTION_NAME)
+# Prefer the collection created in Part 01; use the bundled fallback if needed.
+collection = get_policy_collection(DATA_DIR)
 
 mcp = FastMCP("RAG Server", streamable_http_path="/mcp", port=8001)
 
