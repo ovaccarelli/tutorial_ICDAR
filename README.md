@@ -6,12 +6,23 @@ A hands-on workshop for building AI agents with **Pydantic AI**, tools, RAG, and
 
 ## Setup
 
-1. **Set the vLLM API key** in your shell:
+1. **Clone the repository and enter its directory:**
+   ```bash
+   git clone https://github.com/ovaccarelli/tutorial_ICDAR.git
+   cd tutorial_ICDAR
+   ```
+
+2. **Install the project dependencies:**
+   ```bash
+   uv sync
+   ```
+
+3. **Set the vLLM API key** in your shell:
    ```bash
    export VLLM_API_KEY="$(<.vllm_api_key)"
    ```
 
-2. **Run any script** with `uv`:
+4. **Run the first exercise** with `uv`:
    ```bash
    uv run python exercises/part_01/01_entry_point.py
    ```
