@@ -47,6 +47,7 @@ if __name__ == "__main__":
 
     print(result.output)
 
+# Uncomment the lines below to expose the agent as a small local web app.
 
 #    app = agent.to_web()
 #    logger.info("Starting Simple Pydantic AI Agent on http://127.0.0.1:8000")
