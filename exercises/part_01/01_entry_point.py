@@ -2,6 +2,7 @@
 
 import os
 import time
+from pathlib import Path
 
 import uvicorn
 from loguru import logger
@@ -11,6 +12,7 @@ from pydantic_ai.providers.openai import OpenAIProvider
 
 DEFAULT_VLLM_MODEL = "qwen3.8:27b"
 DEFAULT_VLLM_BASE_URL = "https://litellm.kube-ext.isc.heia-fr.ch/v1"
+VLLM_API_KEY_FILE = Path(__file__).resolve().parents[2] / ".vllm_api_key"
 
 
 def get_vllm_model(
@@ -19,11 +21,20 @@ def get_vllm_model(
     api_key: str | None = None,
 ) -> OpenAIChatModel:
     """Create a Pydantic AI model backed by the remote vLLM OpenAI API."""
+    resolved_api_key = api_key or os.getenv("VLLM_API_KEY")
+    if not resolved_api_key and VLLM_API_KEY_FILE.is_file():
+        resolved_api_key = VLLM_API_KEY_FILE.read_text(encoding="utf-8").strip()
+    if not resolved_api_key:
+        raise RuntimeError(
+            "VLLM_API_KEY is not set and .vllm_api_key was not found. Add your "
+            "LiteLLM key (starting with 'sk-') to .vllm_api_key."
+        )
+
     return OpenAIChatModel(
         model_name=model_name or os.getenv("VLLM_MODEL", DEFAULT_VLLM_MODEL),
         provider=OpenAIProvider(
             base_url=base_url or os.getenv("VLLM_BASE_URL", DEFAULT_VLLM_BASE_URL),
-            api_key=api_key or os.getenv("VLLM_API_KEY") or "not-needed",
+            api_key=resolved_api_key,
         ),
     )
 

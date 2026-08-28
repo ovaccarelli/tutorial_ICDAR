@@ -7,4 +7,3 @@ __pycache__/
 .env
 .env.*
 !.env.example
-.vllm_api_key

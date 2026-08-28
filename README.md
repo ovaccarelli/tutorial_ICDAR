@@ -17,9 +17,15 @@ A hands-on workshop for building AI agents with **Pydantic AI**, tools, RAG, and
    uv sync
    ```
 
-3. **Set the vLLM API key** in your shell:
+3. **Load the bundled vLLM API key.** The scripts read `.vllm_api_key`
+   automatically, so this export is optional:
    ```bash
    export VLLM_API_KEY="$(<.vllm_api_key)"
+   ```
+
+   Verify that it was loaded without printing the secret:
+   ```bash
+   test -n "$VLLM_API_KEY" && echo "VLLM API key loaded"
    ```
 
 4. **Run the first exercise** with `uv`:
