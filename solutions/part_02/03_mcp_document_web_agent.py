@@ -35,8 +35,8 @@ agent = Agent(
     ),
     model_settings=ModelSettings(thinking="minimal"),
     capabilities=[
-        MCP(url=MCP_SERVER_URL, native=False),
-        WebSearch(native=False, local="duckduckgo"),
+        MCP(url=MCP_SERVER_URL),
+        WebSearch(builtin=False),
     ],
 )
 
