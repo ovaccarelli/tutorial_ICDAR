@@ -75,7 +75,7 @@ print(
 question = "What transportation expenses are reimbursable?"
 
 # SOLUTION - Retrieval settings:
-# Retrieve the five chunks most similar to the question.
+# Retrieve the eight chunks most similar to the question.
 TOP_K = 8
 
 # SOLUTION - Semantic retrieval:

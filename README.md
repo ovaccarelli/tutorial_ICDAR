@@ -16,7 +16,7 @@ A hands-on workshop for building AI agents with **Pydantic AI**, tools, RAG, and
    uv run python exercises/part_01/01_entry_point.py
    ```
 
-> **Model:** The default is `qwen3.5:27b`, served through `https://litellm.kube-ext.isc.heia-fr.ch/v1`. API documentation is available at [LiteLLM Swagger UI](https://litellm.kube-ext.isc.heia-fr.ch/).
+> **Model:** The default is `qwen3.8:27b`, served through `https://litellm.kube-ext.isc.heia-fr.ch/v1`. API documentation is available at [LiteLLM Swagger UI](https://litellm.kube-ext.isc.heia-fr.ch/).
 
 ---
 
@@ -57,7 +57,7 @@ uv run python exercises/part_01/03_rag_step_by_step.py
 | [`01_rag_agent.py`](exercises/part_02/01_rag_agent.py) | Agentic RAG — ChromaDB retrieval exposed as an agent tool — web app on port 8000 |
 | [`02a_mcp_rag_server.py`](exercises/part_02/02a_mcp_rag_server.py) | MCP server exposing the shared RAG collection over Streamable HTTP on port 8001 |
 | [`02b_mcp_rag_agent.py`](exercises/part_02/02b_mcp_rag_agent.py) | Agent consuming the MCP server's RAG tool — web app on port 8000 |
-| [`03_mcp_document_web_agent.py`](exercises/part_02/03_mcp_document_web_agent.py) | Agent combining MCP RAG, document tools, web search, and time — web app on port 8000 |
+| [`03_mcp_document_web_agent.py`](exercises/part_02/03_mcp_document_web_agent.py) | Agent combining MCP RAG, document tools, and web search — web app on port 8000 |
 
 ```bash
 uv run python exercises/part_02/01_rag_agent.py # port 8000

@@ -1,6 +1,4 @@
-"""Agent combining MCP RAG, document tools, web search, and time."""
-
-from datetime import datetime
+"""Agent combining MCP RAG, document tools, and web search."""
 
 import uvicorn
 from loguru import logger
@@ -41,19 +39,10 @@ agent = Agent(
 )
 
 
-# EXERCISE 2 - Current time tool:
-# Register this function as a plain agent tool.
-...
-def get_current_time() -> str:
-    """Get the current local date and time."""
-    logger.info("Agent is using the tool to get the current local time.")
-    return datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %Z")
-
-
 if __name__ == "__main__":
-    # EXERCISE 3 - Start this agent and ask it questions that require using the local document tools,
-    # MCP retrieval, web search, and the current time tool to see how it uses all the capabilities
-    # together.
+    # EXERCISE 2 - Start this agent and ask it questions that require using the
+    # local document tools, MCP retrieval, and web search to see how it uses all
+    # the capabilities together.
     app = agent.to_web()
     logger.info("Starting MCP Document Web Agent on http://127.0.0.1:8000")
     uvicorn.run(app, host="127.0.0.1", port=8000)
