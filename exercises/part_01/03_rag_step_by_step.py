@@ -30,6 +30,8 @@ COLLECTION_NAME = "HAL_9000_Expense_Reimbursement_Policy_chunks"
 # STEP 1 - Split the text into overlapping chunks
 #################################################################
 
+print("\n----------- STEP 1: SPLIT INTO CHUNKS -----------")
+
 policy_text = extract_text(str(POLICY_PDF))
 
 # EXERCISE - Chunk settings:
@@ -55,6 +57,8 @@ print(f"Preview of first chunk:\n{chunks[0][:500]}")
 # STEP 2 - Store the chunks in ChromaDB
 #################################################################
 
+print("\n----------- STEP 2: STORE CHUNKS -----------")
+
 client = chromadb.PersistentClient(path=str(CHROMA_DIR))
 collection = client.get_or_create_collection(name=COLLECTION_NAME)
 
@@ -75,6 +79,8 @@ print(
 #################################################################
 # STEP 3 - Retrieve context for a question
 #################################################################
+
+print("\n----------- STEP 3: RETRIEVE CONTEXT -----------")
 
 question = "What transportation expenses are reimbursable?"
 
@@ -97,6 +103,8 @@ print(f"Preview of retrieved context:\n{context[:1000]}")
 #################################################################
 # STEP 4 - Generate an answer from the retrieved context
 #################################################################
+
+print("\n----------- STEP 4: GENERATE ANSWER -----------")
 
 # EXERCISE - Define the system prompt:
 # Tell the model to answer only from the retrieved context and to say when

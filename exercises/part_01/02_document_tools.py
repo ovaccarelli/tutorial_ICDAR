@@ -26,6 +26,8 @@ MY_DOCUMENTS = DATA_DIR / "my_documents"
 # STEP 1 - List all available documents in the directory
 #################################################################
 
+print("\n----------- STEP 1: LIST DOCUMENTS -----------")
+
 # List all files in the MY_DOCUMENTS directory to see what documents are available for preprocessing.
 available_documents = sorted(
     path.name
@@ -37,6 +39,8 @@ print(f"Available documents: {available_documents}")
 #################################################################
 # STEP 2 - Extract text from a Markdown file
 #################################################################
+
+print("\n----------- STEP 2: MARKDOWN EXTRACTION -----------")
 
 markdown_path = MY_DOCUMENTS / "Flight_Ticket.md"
 
@@ -54,6 +58,8 @@ print(f"Preview of first 500 characters:\n{doc_markdown[:500]}")
 # STEP 3 - Extract PDF text
 #################################################################
 
+print("\n----------- STEP 3: PDF EXTRACTION -----------")
+
 pdf_path = MY_DOCUMENTS / "HAL_9000_Expense_Reimbursement_Policy.pdf"
 
 # EXERCISE - Extract the PDF text using pdfminer
@@ -69,6 +75,8 @@ print(f"Preview of first 500 characters:\n{doc_pdfminer[:500]}")
 #################################################################
 # STEP 4 - Extract text from image file
 #################################################################
+
+print("\n----------- STEP 4: IMAGE OCR -----------")
 
 image_path = MY_DOCUMENTS / "Restaurant_Invoice.png"
 
