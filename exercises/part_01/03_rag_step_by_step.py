@@ -16,6 +16,7 @@ from pdfminer.high_level import extract_text
 from pydantic_ai import Agent, ModelSettings
 
 from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
+from loguru import logger
 
 # Define file paths and constants
 HERE = Path(__file__).resolve().parent
@@ -45,10 +46,10 @@ for position in range(0, len(policy_text), STEP_SIZE):
     if content.strip():
         chunks.append(content)
 
-print(
+logger.info(
     f"Created {len(chunks)} chunks "
 )
-print(f"Preview of first chunk:\n{chunks[0][:500]}")
+logger.info(f"Preview of first chunk:\n{chunks[0][:500]}")
 
 
 #################################################################
@@ -66,7 +67,7 @@ collection.upsert(
     ids=[f"chunk_{index}" for index in range(len(chunks))],
 )
 
-print(
+logger.info(
     f"Stored chunks in ChromaDB collection '{COLLECTION_NAME}', "
     f"with {collection.count()} chunks"
 )
@@ -90,8 +91,8 @@ results = collection.query(
 retrieved_chunks = (results.get("documents") or [[]])[0]
 context = "\n\n------------\n\n".join(retrieved_chunks)
 
-print(f"Question: {question}")
-print(f"Preview of retrieved context:\n{context[:1000]}")
+logger.info(f"Question: {question}")
+logger.info(f"Preview of retrieved context:\n{context[:1000]}")
 
 
 #################################################################
@@ -113,4 +114,4 @@ result = agent.run_sync(
     f"Question: {question}\n\nRetrieved context:\n{context}"
 )
 
-print(f"Final answer:\n{result.output}")
+logger.info(f"Final answer:\n{result.output}")
