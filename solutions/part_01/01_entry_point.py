@@ -4,7 +4,6 @@ import os
 import time
 from pathlib import Path
 
-import uvicorn
 from loguru import logger
 from pydantic_ai import Agent, ModelSettings
 from pydantic_ai.models.openai import OpenAIChatModel

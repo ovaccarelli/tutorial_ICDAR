@@ -8,9 +8,9 @@ exercise placeholder.
 import time
 from pathlib import Path
 
+from loguru import logger
 from pdfminer.high_level import extract_text
 from rapidocr import RapidOCR
-from loguru import logger
 
 # Define file paths and constants
 HERE = Path(__file__).resolve().parent
