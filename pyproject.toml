@@ -15,8 +15,23 @@ dependencies = [
     "pydantic-ai-shields>=0.3.1",
     "pydantic-ai-slim[web-fetch]>=1.107.5,<2",
     "rapidocr>=3.8.1",
+    "ruff>=0.16.5",
 ]
 
 [build-system]
 requires = ["uv_build>=0.10.6,<0.11.0"]
 build-backend = "uv_build"
+
+[tool.ruff.lint]
+# Ignore global rules
+ignore = [
+    "N999",
+]
+
+# Ignore specific rules only in exercise files
+[tool.ruff.lint.per-file-ignores]
+"exercises/**/*.py" = [
+    "F401",   # Unused import (left intentionally for students)
+    "I001",   # Unsorted or unformatted import block
+    "PIE790", # Unnecessary `...` literal used as placeholder
+]
