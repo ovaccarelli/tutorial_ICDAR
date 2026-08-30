@@ -90,7 +90,7 @@ def extract_text_from_image_file(file_path: str) -> str:
         )
 
     logger.info(f"Extracting image text with RapidOCR from {path.name}")
-    ocr = RapidOCR()
+    ocr = RapidOCR(params={"Global.log_level": "warning"})
     result = ocr(path)
     return "\n".join(result.txts) if result else "Image text could not be extracted."
 

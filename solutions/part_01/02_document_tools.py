@@ -85,7 +85,7 @@ print_step("STEP 4 - Extract text from an image file")
 image_path = MY_DOCUMENTS / "Restaurant_Invoice.png"
 
 # SOLUTION - Measure how long RapidOCR takes to extract the image text
-engine = RapidOCR()
+engine = RapidOCR(params={"Global.log_level": "warning"})
 
 start_time = time.time()
 result = engine(str(image_path))

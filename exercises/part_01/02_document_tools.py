@@ -91,7 +91,7 @@ print_step("STEP 4 - Extract text from an image file")
 image_path = MY_DOCUMENTS / "Restaurant_Invoice.png"
 
 # EXERCISE - Create the RapidOCR engine and extract the image text
-engine = ...
+engine = ...(params={"Global.log_level": "warning"})
 
 start_time = time.time()
 result = engine(str(image_path))
