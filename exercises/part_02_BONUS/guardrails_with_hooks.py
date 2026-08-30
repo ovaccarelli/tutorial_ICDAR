@@ -27,7 +27,11 @@ async def before_request_hook(
 
     for message in request_context.messages:
         for part in message.parts:
-            if isinstance(part, UserPromptPart) and isinstance(part.content, str) and "cat" in part.content.lower() :
+            if (
+                isinstance(part, UserPromptPart)
+                and isinstance(part.content, str)
+                and "cat" in part.content.lower()
+            ):
                 logger.warning(
                     "Inappropriate content detected in the request. Blocking the request."
                 )
