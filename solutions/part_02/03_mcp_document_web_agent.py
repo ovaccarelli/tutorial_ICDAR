@@ -34,9 +34,12 @@ agent = Agent(
         "the filenames you use."
     ),
     model_settings=ModelSettings(thinking="minimal"),
+    # The local vLLM model does not provide model-native MCP or web-search
+    # tools, so execute both capabilities locally. MCP connects to the HTTP
+    # server above; web search uses the DuckDuckGo strategy provided by ddgs.
     capabilities=[
-        MCP(url=MCP_SERVER_URL),
-        WebSearch(builtin=False),
+        MCP(url=MCP_SERVER_URL, native=False, local=True),
+        WebSearch(native=False, local="duckduckgo"),
     ],
 )
 

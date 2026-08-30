@@ -11,7 +11,14 @@ TOP_K = 8
 # Prefer the collection created in Part 01; use the bundled fallback if needed.
 collection = get_policy_collection(DATA_DIR)
 
-mcp = FastMCP("RAG Server", streamable_http_path="/mcp", port=8001)
+# Start a FastMCP server that will serve the RAG retrieval tool over HTTP. 
+# The agent will connect to this server to perform retrieval.
+mcp = FastMCP(
+    "RAG Server for HAL 9000 Policy",
+    streamable_http_path="/mcp",
+    port=8001,
+    stateless_http=True,
+)
 
 # EXERCISE 1 - MCP Tool:
 # Implement the search_relevant_context_from_HAL_9000_policy function as an MCP tool.
