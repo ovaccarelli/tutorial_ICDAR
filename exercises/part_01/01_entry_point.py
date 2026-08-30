@@ -51,7 +51,7 @@ if __name__ == "__main__":
     result = agent.run_sync("What is the capital of Austria?")
 
     end_time = time.perf_counter()
-    output_tokens = result.usage().output_tokens
+    output_tokens = result.usage.output_tokens
     logger.info(
         f"Token per second: {output_tokens / (end_time - start_time):.2f} tokens/s"
     )
