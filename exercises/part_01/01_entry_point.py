@@ -5,10 +5,15 @@ import time
 from pathlib import Path
 
 import uvicorn
-from loguru import logger
 from pydantic_ai import Agent, ModelSettings
 from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
+
+from tutorial_ICDAR.utils.console_utils import (
+    INFO_STYLE,
+    console,
+    print_step,
+)
 
 DEFAULT_VLLM_MODEL = "qwen3.8:27b"
 DEFAULT_VLLM_BASE_URL = "https://litellm.kube-ext.isc.heia-fr.ch/v1"
@@ -39,27 +44,36 @@ def get_vllm_model(
     )
 
 
+model = get_vllm_model()
+
+
 agent = Agent(
-    model=get_vllm_model(),
+    model=model,
     instructions="You are a helpful assistant",
     model_settings=ModelSettings(thinking="minimal"),
 )
 
 if __name__ == "__main__":
+    print_step("Pydantic AI Agent - Entry Point Demo")
     start_time = time.perf_counter()
 
     result = agent.run_sync("What is the capital of Austria?")
 
     end_time = time.perf_counter()
     output_tokens = result.usage.output_tokens
-    logger.info(
-        f"Token per second: {output_tokens / (end_time - start_time):.2f} tokens/s"
+    console.print(
+        f"Token per second: {output_tokens / (end_time - start_time):.2f} tokens/s",
+        style=INFO_STYLE,
     )
 
-    logger.info(result.output)
+    print_step("Agent Output")
+    console.print(result.output, markup=False)
 
 # Uncomment the lines below to expose the agent as a small local web app.
 
 #    app = agent.to_web()
-#    logger.info("Starting Simple Pydantic AI Agent on http://127.0.0.1:8000")
+#    console.print(
+#        "Starting Simple Pydantic AI Agent on http://127.0.0.1:8000",
+#        style=INFO_STYLE,
+#    )
 #    uvicorn.run(app, host="127.0.0.1", port=8000)

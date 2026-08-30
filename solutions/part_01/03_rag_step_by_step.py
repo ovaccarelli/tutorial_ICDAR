@@ -11,6 +11,12 @@ import chromadb
 from pdfminer.high_level import extract_text
 from pydantic_ai import Agent, ModelSettings
 
+from tutorial_ICDAR.utils.console_utils import (
+    INFO_STYLE,
+    console,
+    print_result,
+    print_step,
+)
 from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
 
 # Define file paths and constants
@@ -26,7 +32,7 @@ COLLECTION_NAME = "HAL_9000_Expense_Reimbursement_Policy_chunks"
 # STEP 1 - Split the text into overlapping chunks
 #################################################################
 
-print("\n----------- STEP 1: SPLIT INTO CHUNKS -----------")
+print_step("STEP 1 - Split the text into overlapping chunks")
 
 policy_text = extract_text(str(POLICY_PDF))
 
@@ -43,18 +49,20 @@ for position in range(0, len(policy_text), STEP_SIZE):
     if content.strip():
         chunks.append(content)
 
-print(
+console.print(
     f"Created {len(chunks)} chunks "
-    f"(size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})"
+    f"(size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})",
+    style=INFO_STYLE,
 )
-print(f"Preview of first chunk:\n{chunks[0][:500]}")
+console.print("Preview of first chunk:", style=INFO_STYLE)
+print_result(chunks[0][:500])
 
 
 #################################################################
 # STEP 2 - Store the chunks in ChromaDB
 #################################################################
 
-print("\n----------- STEP 2: STORE CHUNKS -----------")
+print_step("STEP 2 - Store the chunks in ChromaDB")
 
 client = chromadb.PersistentClient(path=str(CHROMA_DIR))
 collection = client.get_or_create_collection(name=COLLECTION_NAME)
@@ -66,9 +74,10 @@ collection.upsert(
     ids=[f"chunk_{index}" for index in range(len(chunks))],
 )
 
-print(
+console.print(
     f"Stored chunks in ChromaDB collection '{COLLECTION_NAME}', "
-    f"with {collection.count()} chunks"
+    f"with {collection.count()} chunks",
+    style=INFO_STYLE,
 )
 
 
@@ -76,7 +85,7 @@ print(
 # STEP 3 - Retrieve context for a question
 #################################################################
 
-print("\n----------- STEP 3: RETRIEVE CONTEXT -----------")
+print_step("STEP 3 - Retrieve context for a question")
 
 question = "What transportation expenses are reimbursable?"
 
@@ -94,15 +103,16 @@ results = collection.query(
 retrieved_chunks = (results.get("documents") or [[]])[0]
 context = "\n\n------------\n\n".join(retrieved_chunks)
 
-print(f"Question: {question}")
-print(f"Preview of retrieved context:\n{context[:1000]}")
+console.print(f"Question: {question}", style=INFO_STYLE)
+console.print("Preview of retrieved context:", style=INFO_STYLE)
+print_result(context[:1000])
 
 
 #################################################################
 # STEP 4 - Generate an answer from the retrieved context
 #################################################################
 
-print("\n----------- STEP 4: GENERATE ANSWER -----------")
+print_step("STEP 4 - Generate an answer from the retrieved context")
 
 # SOLUTION - Define the system prompt:
 # Ground the model in the context and define behavior for missing answers.
@@ -122,4 +132,5 @@ result = agent.run_sync(
     f"Question: {question}\n\nRetrieved context:\n{context}"
 )
 
-print(f"Final answer:\n{result.output}")
+console.print("Final answer:", style=INFO_STYLE)
+print_result(result.output)
