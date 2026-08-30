@@ -3,8 +3,8 @@ name = "tutorial_ICDAR"
 version = "0.1.0"
 description = "Experiment with agents using Pydantic AI, creating programmable AI agents that can call tools to answer queries."
 readme = "README.md"
-authors = [{ name = "Célien Donzé", email = "celien.donze@hefr.ch" }]
-requires-python = ">=3.13"
+authors = [{ name = "Ornella Vaccarelli", email = "ornella.vaccarelli@hefr.ch" },  {name = "Olivier D'Ancona", email = "olivier.dancona@hefr.ch" }]
+requires-python = ">=3.13,<3.14"
 dependencies = [
     "chromadb>=1.5.5",
     "ddgs>=9.13.1",
@@ -16,7 +16,6 @@ dependencies = [
     "pydantic-ai-slim[web-fetch]>=1.107.5,<2",
     "rapidocr>=3.8.1",
     "rich>=14.2.0",
-    "ruff>=0.16.5",
 ]
 
 [build-system]
@@ -25,9 +24,7 @@ build-backend = "uv_build"
 
 [tool.ruff.lint]
 # Ignore global rules
-ignore = [
-    "N999",
-]
+ignore = ["N999"]
 
 # Ignore specific rules only in exercise files
 [tool.ruff.lint.per-file-ignores]
@@ -35,4 +32,43 @@ ignore = [
     "F401",   # Unused import (left intentionally for students)
     "I001",   # Unsorted or unformatted import block
     "PIE790", # Unnecessary `...` literal used as placeholder
+]
+
+[tool.mypy]
+python_version = "3.13"
+
+# What mypy should check by default
+files = ["src", "solutions"]
+
+# Useful diagnostics
+pretty = true
+show_error_codes = true
+show_column_numbers = true
+warn_unused_configs = true
+
+# Reasonably strict for teaching/reference code
+check_untyped_defs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+no_implicit_optional = true
+warn_return_any = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_unreachable = true
+strict_equality = true
+
+
+[[tool.mypy.overrides]]
+module = [
+    "rapidocr",
+    "rapidocr.*",
+    "pydantic_ai_shields",
+    "pydantic_ai_shields.*",
+]
+ignore_missing_imports = true
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.1",
+    "ruff>=0.16.5",
 ]
