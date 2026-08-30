@@ -56,7 +56,7 @@ if __name__ == "__main__":
         f"Token per second: {output_tokens / (end_time - start_time):.2f} tokens/s"
     )
 
-    print(result.output)
+    logger.info(result.output)
 
 # Uncomment the lines below to expose the agent as a small local web app.
 

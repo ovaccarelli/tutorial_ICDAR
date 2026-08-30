@@ -16,6 +16,7 @@ from pathlib import Path
 
 from pdfminer.high_level import extract_text
 from rapidocr import RapidOCR
+from loguru import logger
 
 # Define file paths and constants
 HERE = Path(__file__).resolve().parent
@@ -32,7 +33,7 @@ available_documents = sorted(
     for path in MY_DOCUMENTS.iterdir()
     if path.is_file() and not path.name.startswith(".")
 )
-print(f"Available documents: {available_documents}")
+logger.info(f"Available documents: {available_documents}")
 
 #################################################################
 # STEP 2 - Extract text from a Markdown file
@@ -45,10 +46,10 @@ start_time = time.time()
 doc_markdown = ...(encoding="utf-8")
 end_time = time.time()
 
-print(f"Using file: {markdown_path.name}")
-print(f"Markdown extracted {len(doc_markdown)} characters")
-print(f"Extraction time: {end_time - start_time:.4f} seconds")
-print(f"Preview of first 500 characters:\n{doc_markdown[:500]}")
+logger.info(f"Using file: {markdown_path.name}")
+logger.info(f"Markdown extracted {len(doc_markdown)} characters")
+logger.info(f"Extraction time: {end_time - start_time:.4f} seconds")
+logger.info(f"Preview of first 500 characters:\n{doc_markdown[:500]}")
 
 #################################################################
 # STEP 3 - Extract PDF text
@@ -61,10 +62,10 @@ start_time = time.time()
 doc_pdfminer = ...
 end_time = time.time()
 
-print(f"Using file: {pdf_path.name}")
-print(f"pdfminer extracted {len(doc_pdfminer)} characters")
-print(f"Extraction time: {end_time - start_time:.4f} seconds")
-print(f"Preview of first 500 characters:\n{doc_pdfminer[:500]}")
+logger.info(f"Using file: {pdf_path.name}")
+logger.info(f"pdfminer extracted {len(doc_pdfminer)} characters")
+logger.info(f"Extraction time: {end_time - start_time:.4f} seconds")
+logger.info(f"Preview of first 500 characters:\n{doc_pdfminer[:500]}")
 
 #################################################################
 # STEP 4 - Extract text from image file
@@ -80,7 +81,7 @@ result = engine(str(image_path))
 doc_ocr = "\n".join(result.txts or [])
 end_time = time.time()
 
-print(f"Using file: {image_path.name}")
-print(f"RapidOCR extracted {len(doc_ocr)} characters")
-print(f"Extraction time: {end_time - start_time:.4f} seconds")
-print(f"Preview of first 500 characters:\n{doc_ocr[:500]}")
+logger.info(f"Using file: {image_path.name}")
+logger.info(f"RapidOCR extracted {len(doc_ocr)} characters")
+logger.info(f"Extraction time: {end_time - start_time:.4f} seconds")
+logger.info(f"Preview of first 500 characters:\n{doc_ocr[:500]}")
