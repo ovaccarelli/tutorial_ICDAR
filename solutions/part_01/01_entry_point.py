@@ -2,7 +2,7 @@
 
 import time
 
-import uvicorn
+import uvicorn  # noqa: F401 - used by the optional web app snippet below
 from pydantic_ai import Agent, ModelSettings
 
 from tutorial_ICDAR.utils.console_utils import (
@@ -10,11 +10,14 @@ from tutorial_ICDAR.utils.console_utils import (
     console,
     print_step,
 )
+from tutorial_ICDAR.utils.observability import configure_observability
 from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
 
+configure_observability()
 
 agent = Agent(
     model=get_vllm_model(),
+    name="entry_point_agent",
     instructions="You are a helpful assistant",
     model_settings=ModelSettings(thinking="minimal"),
 )

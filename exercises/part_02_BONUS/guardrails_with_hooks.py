@@ -8,12 +8,15 @@ from pydantic_ai import (
 )
 from pydantic_ai.capabilities.hooks import Hooks
 
+from tutorial_ICDAR.utils.observability import configure_observability
 from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
 
 hooks = Hooks()
+configure_observability()
 
 agent = Agent(
     model=get_vllm_model(),
+    name="hook_guardrail_agent",
     instructions="You are a helpful assistant",
     capabilities=[hooks],
 )

@@ -21,6 +21,7 @@ from tutorial_ICDAR.utils.console_utils import (
     print_result,
     print_step,
 )
+from tutorial_ICDAR.utils.observability import configure_observability
 from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
 
 # Define file paths and constants
@@ -117,6 +118,8 @@ print_result(context[:1000])
 
 print_step("STEP 4 - Generate an answer from the retrieved context")
 
+configure_observability()
+
 # EXERCISE - Define the system prompt:
 # Tell the model to answer only from the retrieved context and to say when
 # the context does not contain the answer.
@@ -124,6 +127,7 @@ SYSTEM_PROMPT = ...
 
 agent = Agent(
     model=get_vllm_model(),
+    name="rag_generation_agent",
     instructions=SYSTEM_PROMPT,
     model_settings=ModelSettings(thinking="minimal"),
 )
