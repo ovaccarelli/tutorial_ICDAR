@@ -45,6 +45,7 @@ A hands-on workshop for building AI agents with **Pydantic AI**, tools, RAG, and
 | `solutions/` | Reference implementations |
 | `src/tutorial_ICDAR/` | Shared utilities (`rag_utils.py`, `document_tools.py`, `pydantic_utils.py`) |
 | `data/` | Documents and the ChromaDB vector store |
+| `observability/` | Local Langfuse Docker Compose stack |
 
 ---
 
@@ -106,6 +107,107 @@ uv run python exercises/part_02/02b_mcp_rag_agent.py # port 8000
 ```bash
 uv run python exercises/part_02_BONUS/simple_guardrail.py
 uv run python exercises/part_02_BONUS/guardrails_with_hooks.py
+```
+
+---
+
+### Part 03 — Observability with Langfuse
+
+Part 03 compares an ungrounded model answer with a tool-assisted RAG answer,
+then uses Langfuse to inspect what happened inside each agent run.
+
+#### 1. Start the local Langfuse instance
+
+Docker Desktop (or Docker Engine with Compose) must be running. The first start
+downloads the Langfuse services and can take a few minutes.
+
+```bash
+docker compose -f observability/docker-compose.yml up -d --wait
+curl --fail "http://localhost:3000/api/public/health?failIfDatabaseUnavailable=true"
+```
+
+Open [http://localhost:3000](http://localhost:3000) and sign in with the
+preconfigured local workshop account:
+
+- Email: `student@tutorial.local`
+- Password: `tutorial-langfuse`
+
+The Compose file creates the **Tutorial Agents** project and matching API keys
+automatically. These credentials are deliberately public and safe only because
+the workshop services bind to your local machine.
+
+#### 2. Instrument and run the lab
+
+Complete `exercises/part_03/01_observability.py`, then run it:
+
+```bash
+uv run python exercises/part_03/01_observability.py
+```
+
+The exercise requires a healthy Langfuse instance and tells you how to start it
+if the health or authentication check fails. Short-lived scripts flush their
+pending trace data before they exit.
+
+#### 3. Investigate the traces
+
+In the Langfuse **Tracing** view, compare `observability_baseline_agent` with
+`observability_rag_agent`:
+
+1. How many model requests did each run make?
+2. Which span contains the search query and retrieved policy chunks?
+3. What information is added to the second RAG model request?
+4. Which operation dominates latency?
+5. How do input and output token counts differ?
+
+To trace any earlier exercise, set `LANGFUSE_ENABLED=true` for the agent process:
+
+```bash
+LANGFUSE_ENABLED=true uv run python exercises/part_02/01_rag_agent.py
+```
+
+For the MCP example, leave the server unchanged and enable tracing on the agent:
+
+```bash
+# Terminal 1
+uv run python exercises/part_02/02a_mcp_rag_server.py
+
+# Terminal 2
+LANGFUSE_ENABLED=true uv run python exercises/part_02/02b_mcp_rag_agent.py
+```
+
+The trace shows the agent-side MCP selection, arguments, result, and duration.
+It does not continue as a distributed trace inside the separate FastMCP server.
+
+As an error-trace experiment, run the hook guardrail with observability enabled
+and ask its web UI a question containing `cat`. Inspect where the run fails:
+
+```bash
+LANGFUSE_ENABLED=true uv run python exercises/part_02_BONUS/guardrails_with_hooks.py
+```
+
+The custom workshop model reports token usage, but Langfuse may leave cost empty
+because it has no pricing table for that model name.
+
+#### 4. Stop or reset Langfuse
+
+Normal shutdown preserves traces in Docker volumes:
+
+```bash
+docker compose -f observability/docker-compose.yml down
+```
+
+To delete all local Langfuse traces, accounts, and project data and recreate a
+clean workshop instance, remove the volumes explicitly:
+
+```bash
+docker compose -f observability/docker-compose.yml down -v
+```
+
+If startup fails, inspect the service state and logs:
+
+```bash
+docker compose -f observability/docker-compose.yml ps
+docker compose -f observability/docker-compose.yml logs --tail=100
 ```
 
 ---

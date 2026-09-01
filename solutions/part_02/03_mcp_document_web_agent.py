@@ -11,12 +11,16 @@ from tutorial_ICDAR.utils.document_tools import (
     extract_text_from_pdf_file,
     list_my_available_documents,
 )
+from tutorial_ICDAR.utils.observability import configure_observability
 from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
 
 MCP_SERVER_URL = "http://localhost:8001/mcp"
 
+configure_observability()
+
 agent = Agent(
     model=get_vllm_model(),
+    name="document_web_agent",
     tools=[
         list_my_available_documents,
         extract_text_from_md_or_txt_file,

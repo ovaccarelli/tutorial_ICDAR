@@ -45,9 +45,10 @@ def get_vllm_model(
         An instance of OpenAIChatModel configured to use the specified vLLM model and API base URL.
     """
     resolved_api_key = _get_vllm_api_key(api_key)
+    resolved_model_name = model_name or os.getenv("VLLM_MODEL") or DEFAULT_VLLM_MODEL
 
     return OpenAIChatModel(
-        model_name=model_name or os.getenv("VLLM_MODEL", DEFAULT_VLLM_MODEL),
+        model_name=resolved_model_name,
         provider=OpenAIProvider(
             base_url=base_url or os.getenv("VLLM_BASE_URL", DEFAULT_VLLM_BASE_URL),
             api_key=resolved_api_key,

@@ -6,6 +6,7 @@ import uvicorn
 from loguru import logger
 from pydantic_ai import Agent, ModelSettings
 
+from tutorial_ICDAR.utils.observability import configure_observability
 from tutorial_ICDAR.utils.pydantic_utils import get_vllm_model
 from tutorial_ICDAR.utils.rag_utils import get_policy_collection, retrieve_context
 
@@ -13,11 +14,14 @@ HERE = Path(__file__).parent
 DATA_DIR = HERE.parent.parent / "data"
 TOP_K = 8
 
+configure_observability()
+
 # Prefer the collection created in Part 01; use the bundled fallback if needed.
 collection = get_policy_collection(DATA_DIR)
 
 agent = Agent(
     model=get_vllm_model(),
+    name="rag_agent",
     instructions=(
         "You are a helpful assistant. Be concise and accurate. "
         "Always use the available tools when answering questions about the documents. "
